@@ -1,8 +1,8 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+This project was create for training my Redux and Tests skills.
 
-## Available Scripts
+## About the app
 
-In the project directory, you can run:
+You can search for some beers detail and can post your beers too.
 
 ### `npm start`
 
