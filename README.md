@@ -1,4 +1,4 @@
-This project was create for training my Redux and Tests skills.
+This project was create for training Redux and Jest. 
 
 ## About the app
 
