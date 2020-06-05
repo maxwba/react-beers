@@ -1,13 +1,14 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState } from 'react';
-import { Box, Spinner, PseudoBox } from '@chakra-ui/core';
+import React, { useEffect } from 'react';
+import {
+  Box, Spinner, PseudoBox, Input,
+} from '@chakra-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { setData } from '../app/allBeers';
 
 // eslint-disable-next-line import/prefer-default-export
 export const AllBeers = () => {
-  
   const AllBeersState = (useSelector((state) => state.allBeers.data));
   const isLoading = (useSelector((state) => state.loading.isLoading));
   const dispatch = useDispatch();
@@ -30,8 +31,11 @@ export const AllBeers = () => {
         </Box>
       ) : (
         <Box display="flex" flexWrap="wrap" justifyContent="space-evenly">
+          <Box width="100vw" d="flex" justifyContent="center" m="10px">
+            <Input placeholder="Tap to search" />
+          </Box>
           {AllBeersState.map((beer) => (
-            <Box key={beer._id} display="flex" margin="30px" flexWrap="wrap">
+            <Box key={beer._id} display="flex" m="10px">
               <PseudoBox
                 role="group"
                 maxW="sm"
