@@ -7,6 +7,7 @@ import { setData } from '../app/allBeers';
 
 // eslint-disable-next-line import/prefer-default-export
 export const AllBeers = () => {
+  
   const AllBeersState = (useSelector((state) => state.allBeers.data));
   const isLoading = (useSelector((state) => state.loading.isLoading));
   const dispatch = useDispatch();
