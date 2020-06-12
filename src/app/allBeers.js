@@ -23,15 +23,14 @@ export const allBeerSlice = createSlice({
 
 export const { setBeers, setError } = allBeerSlice.actions;
 
-export const setData = () => async (dispatch) => {
+export const setData = (searchTerm) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const response = await axios.get('https://ih-beers-api2.herokuapp.com/beers');
+    const response = await axios.get(`https://ih-beers-api2.herokuapp.com/beers/search?q=${searchTerm}`);
     dispatch(setBeers(response.data));
     dispatch(setLoading(false));
   } catch (error) {
     dispatch(setError(error.message));
-    console.log(error);
   }
 };
 

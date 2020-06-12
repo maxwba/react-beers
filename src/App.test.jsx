@@ -3,6 +3,7 @@ import { render, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import MockAdapter from 'axios-mock-adapter';
 import { act } from 'react-dom/test-utils';
+import userEvent from '@testing-library/user-event';
 
 import store from './app/store';
 import App from './App';
@@ -10,7 +11,7 @@ import axios from './api/axios';
 
 const mock = new MockAdapter(axios);
 
-mock.onGet('https://ih-beers-api2.herokuapp.com/beers').reply(200,
+mock.onGet('https://ih-beers-api2.herokuapp.com/beers/search?q=').reply(200,
   [{
     image_url: 'https://images.punkapi.com/v2/keg.png',
     _id: '5daf440ccbc5d2fd7d19ebdd',
@@ -384,7 +385,14 @@ test('The Add button is render on page', () => {
 
 test('The beers list is render in AllBeers view', async () => {
   const { getByText, getAllByTestId } = render(<Provider store={store}><App /></Provider>);
-  expect(getByText('Beer catalog')).toBeInTheDocument();
+  await act(async () => expect(getByText('Beer catalog')).toBeInTheDocument());
   await act(async () => fireEvent.click(getByText('Beer catalog')));
   expect(getAllByTestId('beers').length).toBe(3);
+});
+
+test('The search field brings the correctly beer', async () => {
+  const { getByPlaceholderText, getByTestId } = render(<Provider store={store}><App /></Provider>);
+  expect(getByPlaceholderText('Tap to search')).toBeInTheDocument();
+  await act(async () => userEvent.type(getByTestId('input-test'), 'Trashy'));
+  expect(mock.history.get[2].url).toContain('https://ih-beers-api2.herokuapp.com/beers/search?q=Trashy');
 });

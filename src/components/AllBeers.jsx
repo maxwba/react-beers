@@ -4,21 +4,26 @@ import {
   Box, Spinner, PseudoBox, Input,
 } from '@chakra-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { setData } from '../app/allBeers';
+import { setTerm } from '../app/searchBeers';
 
 // eslint-disable-next-line import/prefer-default-export
 export const AllBeers = () => {
   const AllBeersState = (useSelector((state) => state.allBeers.data));
+  const SearchTerm = (useSelector((state) => state.searchBeer.searchTerm));
   const isLoading = (useSelector((state) => state.loading.isLoading));
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setData());
-  }, []);
+    dispatch(setData(SearchTerm));
+  }, [SearchTerm]);
+
 
   return (
-    <Box>
+    <Box display="flex" flexDirection="column" justifyContent="left" alignItems="center">
+      <Box width="100vw" d="flex" justifyContent="center" m="10px">
+        <Input data-testid="input-test" width="88%" placeholder="Tap to search" value={SearchTerm} onChange={(event) => dispatch(setTerm(event.target.value))} />
+      </Box>
       {isLoading ? (
         <Box h="100vh" d="flex" alignItems="center" justifyContent="center">
           <Spinner
@@ -31,9 +36,6 @@ export const AllBeers = () => {
         </Box>
       ) : (
         <Box display="flex" flexWrap="wrap" justifyContent="space-evenly">
-          <Box width="100vw" d="flex" justifyContent="center" m="10px">
-            <Input placeholder="Tap to search" />
-          </Box>
           {AllBeersState.map((beer) => (
             <Box key={beer._id} display="flex" m="10px">
               <PseudoBox
